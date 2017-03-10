@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieListRouter: MovieListWireFream {
+class MovieListRouter: IMovieListRouter {
     weak var viewController: UIViewController?
     
     static func assembleModule() -> UIViewController {
@@ -16,8 +16,13 @@ class MovieListRouter: MovieListWireFream {
         
         let router = MovieListRouter()
         
-        router.viewController = storyBoard.instantiateViewController(withIdentifier: R.ViewControllerID.movieList);
+        let view = storyBoard.instantiateViewController(withIdentifier: R.ViewControllerID.movieList) as! MovieListViewController;
+        router.viewController! = view
+
         let navigation = UINavigationController(rootViewController: router.viewController!)
+        let presenter = MovieListPresenter()
+        view.presenter = presenter
+        
         return navigation
     }
 }

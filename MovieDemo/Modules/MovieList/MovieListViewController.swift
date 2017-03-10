@@ -7,21 +7,34 @@
 //
 
 import UIKit
-
-class MovieListViewController: UIViewController {
-
+import Kingfisher
+class MovieListViewController: UIViewController,IMovieListView {
+    
+    var presenter: IMovieListPresenter!
+    var movies: [Movie] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.view.backgroundColor = UIColor.red
+        presenter?.viewDidLoad()
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    func showNoContentScreen() {
+        
+    }
 
+    func showMoviesData(movies: [Movie]) {
+        
+    }
     /*
     // MARK: - Navigation
 
@@ -32,4 +45,37 @@ class MovieListViewController: UIViewController {
     }
     */
 
+}
+
+extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as! MovieCollectionViewCell
+        
+        let movie = self.movies[indexPath.row]
+        cell.labelMovieTitle.text = movie.title
+        
+        if let path = movie.posterPath {
+            let totalPath = "https://image.tmdb.org/t/p/w154/" + path
+            let url = URL(string: totalPath)
+            cell.imageViewMovie.kf.setImage(with:url,
+                                            placeholder: UIImage(named: "Placeholder"),
+                                            options: nil,
+                                            progressBlock: nil,
+                                            completionHandler:nil)
+        }
+        
+        return cell;
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = self.movies[indexPath.row]
+        self.performSegue(withIdentifier: "detailSegue", sender: movie)
+    }
 }
