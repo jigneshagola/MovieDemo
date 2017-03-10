@@ -17,6 +17,7 @@ protocol IMovieListPresenter {
     weak var view: IMovieListView? { get set }
     var router:IMovieListRouter! { get set }
     var interactor:IMovieListInteractor! { get set }
+    var movies:[Movie] { get set }
     
     func viewDidLoad()
     func didClickSortButton()

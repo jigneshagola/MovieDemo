@@ -18,7 +18,7 @@ class MovieListInteractor: IMovieListInteractor {
     }
     
     func movieFetched(movie: [Movie]) {
-        
+        self.presenter.movies = movie
     }
     
     func movieFetchFailed() {

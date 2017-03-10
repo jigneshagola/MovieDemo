@@ -15,13 +15,19 @@ class MovieListRouter: IMovieListRouter {
         let storyBoard = UIStoryboard(name: R.StoryBoard.main, bundle: nil);
         
         let router = MovieListRouter()
+        let interactor = MovieListInteractor()
         
         let view = storyBoard.instantiateViewController(withIdentifier: R.ViewControllerID.movieList) as! MovieListViewController;
-        router.viewController! = view
+        router.viewController = view
 
         let navigation = UINavigationController(rootViewController: router.viewController!)
         let presenter = MovieListPresenter()
         view.presenter = presenter
+        
+        presenter.view = view
+        presenter.interactor = interactor
+        
+        interactor.presenter = presenter
         
         return navigation
     }

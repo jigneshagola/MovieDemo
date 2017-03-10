@@ -20,8 +20,9 @@ class MovieListViewController: UIViewController,IMovieListView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.viewDidLoad()
         
+        self.collectionView.register(UINib(nibName: R.CellId.movieList, bundle: nil), forCellWithReuseIdentifier: R.CellId.movieList)
+        presenter?.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,21 +34,11 @@ class MovieListViewController: UIViewController,IMovieListView {
     }
 
     func showMoviesData(movies: [Movie]) {
-        
+        self.movies = movies
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
-extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDelegate {
+extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.movies.count
@@ -55,20 +46,10 @@ extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as! MovieCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.CellId.movieList, for: indexPath) as! MovieCollectionViewCell
         
         let movie = self.movies[indexPath.row]
-        cell.labelMovieTitle.text = movie.title
-        
-        if let path = movie.posterPath {
-            let totalPath = "https://image.tmdb.org/t/p/w154/" + path
-            let url = URL(string: totalPath)
-            cell.imageViewMovie.kf.setImage(with:url,
-                                            placeholder: UIImage(named: "Placeholder"),
-                                            options: nil,
-                                            progressBlock: nil,
-                                            completionHandler:nil)
-        }
+        cell.setUpCell(movie: movie)
         
         return cell;
         
@@ -77,5 +58,21 @@ extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = self.movies[indexPath.row]
         self.performSegue(withIdentifier: "detailSegue", sender: movie)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 8;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width/2 - 12, height: 270)
     }
 }

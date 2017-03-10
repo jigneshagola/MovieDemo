@@ -21,6 +21,7 @@ class MovieListPresenter: IMovieListPresenter {
             }
         }
     }
+    
     func viewDidLoad() {
         interactor.fetchMovie(for: 1)
     }

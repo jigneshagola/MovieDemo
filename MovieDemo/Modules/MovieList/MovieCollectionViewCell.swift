@@ -17,5 +17,18 @@ class MovieCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    func setUpCell(movie:Movie) {
+        self.labelMovieTitle.text = movie.title
+        if let path = movie.posterPath {
+            
+            let url = URL(string: path.getImageUrl(for: R.ImageSize.thumbnil))
+            self.imageViewMovie.kf.setImage(with:url,
+                                            placeholder: UIImage(named: "Placeholder"),
+                                            options: nil,
+                                            progressBlock: nil,
+                                            completionHandler:nil)
+        }
 
+    }
 }
