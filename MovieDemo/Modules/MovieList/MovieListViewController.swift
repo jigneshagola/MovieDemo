@@ -20,13 +20,24 @@ class MovieListViewController: UIViewController,IMovieListView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.collectionView.register(UINib(nibName: R.CellId.movieList, bundle: nil), forCellWithReuseIdentifier: R.CellId.movieList)
         presenter?.viewDidLoad()
+        self.setupView()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    func setupView() {
+        self.collectionView.register(UINib(nibName: R.CellId.movieList, bundle: nil), forCellWithReuseIdentifier: R.CellId.movieList)
+        
+        let sortButton = UIBarButtonItem(
+            title: "Sort",
+            style: .plain,
+            target: self,
+            action: #selector(MovieListViewController.didClickSortButton(sender:))
+        )
+        navigationItem.rightBarButtonItem = sortButton
     }
     
     func showNoContentScreen() {
@@ -35,6 +46,10 @@ class MovieListViewController: UIViewController,IMovieListView {
 
     func showMoviesData(movies: [Movie]) {
         self.movies = movies
+    }
+    
+    func didClickSortButton(sender: Any) {
+        self.presenter.didClickSortButton()
     }
 }
 
@@ -50,6 +65,10 @@ extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDel
         
         let movie = self.movies[indexPath.row]
         cell.setUpCell(movie: movie)
+        
+        if indexPath.row == self.movies.count - 2 {
+            self.presenter.fetchMoreMovies()
+        }
         
         return cell;
         

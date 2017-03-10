@@ -11,14 +11,14 @@ import UIKit
 class MovieListInteractor: IMovieListInteractor {
     var presenter: IMovieListPresenter!
     
-    func fetchMovie(for page: Int) {
-        MovieListService.fetchMovie(for: page, sortBy: "") { (movies) in
+    func fetchMovie(for page: Int, sortType: SortType) {
+        MovieListService.fetchMovie(for: page, sortBy: sortType.rawValue) { (movies) in
             self.movieFetched(movie: movies)
         }
     }
     
     func movieFetched(movie: [Movie]) {
-        self.presenter.movies = movie
+        self.presenter.moviesFetched(movies: movie)
     }
     
     func movieFetchFailed() {

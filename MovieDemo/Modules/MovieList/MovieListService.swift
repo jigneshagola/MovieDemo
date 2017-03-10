@@ -13,7 +13,7 @@ class MovieListService {
     
     static func fetchMovie(for page:Int,sortBy:String, onComplition: @escaping ([Movie]) -> Void) {
         
-        let URL = R.apiBaseUrl + "/discover/movie?sort_by=" + "popularity.desc" + "&api_key=" + R.apiKey + "&page=\(page)"
+        let URL = R.apiBaseUrl + "/discover/movie?sort_by=" + sortBy + "&api_key=" + R.apiKey + "&page=\(page)"
         Alamofire.request(URL).responseObject{ (response: DataResponse<MoviePageResponse>) in
             let movieResponse = response.result.value
             onComplition((movieResponse?.movies)!)

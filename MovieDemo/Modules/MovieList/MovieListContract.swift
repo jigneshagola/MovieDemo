@@ -11,6 +11,9 @@ import UIKit
 protocol IMovieListRouter {
     weak var viewController: UIViewController? { get set }
     static func assembleModule() -> UIViewController
+    
+    func presentSortOptions(sortCompletion: ((SortType) -> ())?)
+    func presentDetails(forArticle article: Movie)
 }
 
 protocol IMovieListPresenter {
@@ -20,14 +23,16 @@ protocol IMovieListPresenter {
     var movies:[Movie] { get set }
     
     func viewDidLoad()
+    func fetchMoreMovies()
+    func moviesFetched(movies:[Movie]) 
     func didClickSortButton()
-    func didSelectArticle(movie: Movie)
+    func didSelectMovie(movie: Movie)
 }
 
 protocol IMovieListInteractor {
     var presenter: IMovieListPresenter! { get set }
     
-    func fetchMovie(for page:Int)
+    func fetchMovie(for page:Int,sortType:SortType)
     func movieFetched(movie: [Movie])
     func movieFetchFailed()
 }
