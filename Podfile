@@ -4,14 +4,13 @@
 target 'MovieDemo' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-  pod 'AlamofireObjectMapper', '~> 4.0'
   pod 'Kingfisher', '~> 3.0'
   pod 'PKHUD', :git => 'https://github.com/toyship/PKHUD.git'
-  # Pods for MovieDemo
-
+  pod 'AlamofireObjectMapper', '~> 4.0'
+  
   target 'MovieDemoTests' do
     inherit! :search_paths
-    # Pods for testing
+     pod 'AlamofireObjectMapper', '~> 4.0'
   end
 
   target 'MovieDemoUITests' do

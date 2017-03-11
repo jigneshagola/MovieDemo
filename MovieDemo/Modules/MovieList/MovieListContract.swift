@@ -13,7 +13,7 @@ protocol IMovieListRouter {
     static func assembleModule() -> UIViewController
     
     func presentSortOptions(sortCompletion: ((SortType) -> ())?)
-    func presentDetails(forArticle article: Movie)
+    func presentDetails(for movie: Movie)
 }
 
 protocol IMovieListPresenter {

@@ -48,13 +48,17 @@ class MovieListPresenter: IMovieListPresenter {
     
     func didClickSortButton() {
         router.presentSortOptions { (sortType) in
-            if self.sortType != sortType {
-                self.sortType = sortType
-                self.currentPage = 0
-                self.isMoreDataAvailable = true
-                self.movies.removeAll()
-                self.fetchMoreMovies()
-            }
+            self.onSelected(sortType: sortType)
+        }
+    }
+    
+    func onSelected(sortType:SortType) {
+        if self.sortType != sortType {
+            self.sortType = sortType
+            self.currentPage = 0
+            self.isMoreDataAvailable = true
+            self.movies.removeAll()
+            self.fetchMoreMovies()
         }
     }
     

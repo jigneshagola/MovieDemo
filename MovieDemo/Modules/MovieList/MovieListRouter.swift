@@ -65,7 +65,7 @@ class MovieListRouter: IMovieListRouter {
         self.viewController?.present(alert, animated: true, completion: nil)
     }
     
-    func presentDetails(forArticle article: Movie) {
+    func presentDetails(for movie: Movie) {
         
     }
     

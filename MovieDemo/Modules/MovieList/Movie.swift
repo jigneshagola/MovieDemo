@@ -10,6 +10,7 @@ import UIKit
 import ObjectMapper
 class Movie: Mappable {
     
+    var id:Int!
     var posterPath:String?
     var title:String!
     var originalTitle:String?
@@ -20,7 +21,7 @@ class Movie: Mappable {
     var voteCount:Int?
     
     func mapping(map: Map) {
-        
+        self.id <- map["id"]
         self.posterPath <- map["poster_path"]
         self.title <- map["title"]
         self.backdropPath <- map["backdrop_path"]

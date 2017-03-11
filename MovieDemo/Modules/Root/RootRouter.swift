@@ -10,7 +10,7 @@ import UIKit
 
 class RootRouter {
     
-    static func presentArticlesScreen(in window: UIWindow) {
+    static func presentMovieScreen(in window: UIWindow) {
         window.makeKeyAndVisible()
         window.rootViewController = MovieListRouter.assembleModule()
     }
