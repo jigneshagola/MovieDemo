@@ -32,7 +32,7 @@ class MovieListPresenter: IMovieListPresenter {
     
     func moviesFetched(movies:[Movie]) {
         
-        if movies.count < 20 {
+        if movies.count < R.perPage {
             self.isMoreDataAvailable = false
         }
         

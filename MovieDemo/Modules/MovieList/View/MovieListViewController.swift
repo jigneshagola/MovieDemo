@@ -14,7 +14,7 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
     var movies: [Movie] = []
     
     var searchController:UISearchController!
-    var searchResultViewController: MovieSearchResultViewController?
+    var searchResultViewController: MovieSearchResultViewController!
     
     var noSearchResultLabel:UILabel?
     
@@ -24,6 +24,7 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
         super.viewDidLoad()
         presenter?.viewDidLoad()
         self.setupView()
+        self.setUpSearchController()
     }
     
     fileprivate func setupView() {
@@ -37,18 +38,17 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
             action: #selector(MovieListViewController.didClickSortButton(sender:))
         )
         navigationItem.rightBarButtonItem = sortButton
+    }
+    
+    fileprivate func setUpSearchController() {
         
-        let flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        
-        self.searchResultViewController = MovieSearchResultViewController(collectionViewLayout: flowLayout)
+        self.searchResultViewController = MovieSearchResultViewController(collectionViewLayout: self.getFlowLayout())
         self.searchResultViewController?.presenter = presenter
         
         self.searchController = UISearchController(searchResultsController:  self.searchResultViewController)
         
-        
         self.searchController.searchResultsUpdater = self
         self.searchController.delegate = self
-        
         self.searchController.hidesNavigationBarDuringPresentation = false
         self.searchController.dimsBackgroundDuringPresentation = false
         
@@ -57,6 +57,17 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
         self.definesPresentationContext = true
     }
     
+    fileprivate func getFlowLayout() -> UICollectionViewFlowLayout {
+        
+        let flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
+        flowLayout.minimumInteritemSpacing = 8
+        flowLayout.minimumLineSpacing = 8
+        flowLayout.itemSize = CGSize(width: self.view.frame.size.width/2 - 12, height: 270)
+        flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        
+        return flowLayout;
+    }
 //MARK: Interface mathods
     
     func showMoviesData(movies: [Movie]) {

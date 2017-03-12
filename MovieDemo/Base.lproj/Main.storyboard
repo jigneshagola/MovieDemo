@@ -52,10 +52,10 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--Movie Detail View Controller-->
+        <!--Movie Detail-->
         <scene sceneID="BPe-ON-fKh">
             <objects>
-                <viewController storyboardIdentifier="MovieDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="3Xe-aN-rwo" customClass="MovieDetailViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieDetailViewController" title="Movie Detail" automaticallyAdjustsScrollViewInsets="NO" id="3Xe-aN-rwo" customClass="MovieDetailViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gvd-Ge-f1z"/>
                         <viewControllerLayoutGuide type="bottom" id="qna-hb-MGw"/>

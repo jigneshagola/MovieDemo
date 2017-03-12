@@ -72,16 +72,20 @@ class MovieListTests: XCTestCase {
         let view = DummyVC()
         self.movieListPresenter?.view = view
         
-        self.movieListPresenter?.moviesFetched(movies: [movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!])
+        var movies = [Movie]()
+        for _ in 1...R.perPage {
+            movies.append(movie1!)
+        }
+        self.movieListPresenter?.moviesFetched(movies:movies)
         
         XCTAssertTrue((self.movieListPresenter?.isMoreDataAvailable)!)
-        XCTAssertEqual(self.movieListPresenter?.movies.count, 12)
+        XCTAssertEqual(self.movieListPresenter?.movies.count, 22)
         XCTAssertTrue(view.isShowMoviesCalled)
         
         self.movieListPresenter?.moviesFetched(movies: [movie1!,movie2!])
         
         XCTAssertFalse((self.movieListPresenter?.isMoreDataAvailable)!)
-        XCTAssertEqual(self.movieListPresenter?.movies.count, 14)
+        XCTAssertEqual(self.movieListPresenter?.movies.count, 24)
         
     }
     

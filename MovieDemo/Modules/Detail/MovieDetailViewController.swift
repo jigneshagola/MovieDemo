@@ -27,6 +27,7 @@ class MovieDetailViewController: UIViewController,IMovieDetailView {
     }
     
     func setUpView() {
+        
         self.tableView.register(UINib(nibName: R.CellId.movieDetailHeader, bundle:nil), forCellReuseIdentifier: R.CellId.movieDetailHeader)
         self.tableView.register(UINib(nibName: R.CellId.movieDetail, bundle:nil), forCellReuseIdentifier: R.CellId.movieDetail)
     }

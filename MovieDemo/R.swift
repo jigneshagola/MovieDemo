@@ -39,7 +39,7 @@ struct R {
     
     static let apiKey = "17be64f009f004298adba6df55c59ec4"
     static let perPage = 20
-    static let minimumVote = 1000
+    static let minimumVote = 100
     
     struct APIPath {
         static let discoverMovie = "/discover/movie"
