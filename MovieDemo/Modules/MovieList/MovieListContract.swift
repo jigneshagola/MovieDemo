@@ -18,7 +18,7 @@ protocol IMovieListRouter {
     func showError(with title: String, messege: String,retryCallBack:@escaping () -> Void)
 }
 
-protocol IMovieListPresenter {
+protocol IMovieListPresenter:class {
     weak var view: IMovieListView? { get set }
     var router:IMovieListRouter! { get set }
     var interactor:IMovieListInteractor! { get set }
@@ -36,7 +36,7 @@ protocol IMovieListPresenter {
     func searchMovie(for searchText:String)
 }
 
-protocol IMovieListInteractor {
+protocol IMovieListInteractor: class {
     var presenter: IMovieListPresenter! { get set }
     
     func fetchMovie(for page:Int,sortType:SortType)
@@ -45,7 +45,7 @@ protocol IMovieListInteractor {
     func movieFetchFailed(with error:Error)
 }
 
-protocol IMovieListView: class {
+protocol IMovieListView: Indicatable {
     var presenter: IMovieListPresenter! { get set }
     
     func showMoviesData(movies: [Movie])

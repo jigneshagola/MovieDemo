@@ -33,5 +33,24 @@ struct R {
         static let backdrop = "w342"
     }
     
+    struct movieLanguage {
+        static let english = "en"
+    }
+    
     static let apiKey = "17be64f009f004298adba6df55c59ec4"
+    static let perPage = 20
+    static let minimumVote = 1000
+    
+    struct APIPath {
+        static let discoverMovie = "/discover/movie"
+    }
+    
+    struct APIParamKey {
+        static let sortBy = "sort_by"
+        static let apiKey = "api_key"
+        static let page = "page"
+        static let language =  "with_original_language"
+        static let voteCount = "vote_count.gte"
+        
+    }
 }

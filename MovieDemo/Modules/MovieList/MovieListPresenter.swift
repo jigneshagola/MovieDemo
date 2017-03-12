@@ -26,21 +26,26 @@ class MovieListPresenter: IMovieListPresenter {
     var sortType:SortType = .popularity
     
     func viewDidLoad() {
+        self.view?.showActivityIndicator()
         self.fetchMoreMovies()
     }
     
     func moviesFetched(movies:[Movie]) {
         
-        if movies.count < 10 {
+        if movies.count < 20 {
             self.isMoreDataAvailable = false
         }
         
+        if currentPage == 1 {
+            self.view?.hideActivityIndicator()
+        }
         self.movies = self.movies + movies
         self.view?.showMoviesData(movies: self.movies)
     }
     
     func moviesFethingFailed(error: Error) {
         currentPage = currentPage - 1
+        self.view?.hideActivityIndicator()
         self.router.showError(with: "OOPS!", messege: error.localizedDescription, retryCallBack: {
             self.fetchMoreMovies()
         })

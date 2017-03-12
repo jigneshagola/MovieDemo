@@ -9,7 +9,7 @@
 import XCTest
 import ObjectMapper
 
-class MovieListPresenterTests: XCTestCase {
+class MovieListTests: XCTestCase {
     
     var movieListPresenter:MovieListPresenter!
     
