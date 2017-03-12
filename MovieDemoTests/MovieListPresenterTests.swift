@@ -11,7 +11,7 @@ import ObjectMapper
 
 class MovieListPresenterTests: XCTestCase {
     
-    var movieListPresenter:MovieListPresenter?
+    var movieListPresenter:MovieListPresenter!
 
     override func setUp() {
         super.setUp()

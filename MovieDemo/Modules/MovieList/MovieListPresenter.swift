@@ -63,6 +63,6 @@ class MovieListPresenter: IMovieListPresenter {
     }
     
     func didSelectMovie(movie: Movie) {
-        
+        self.router.presentDetails(for: movie)
     }
 }

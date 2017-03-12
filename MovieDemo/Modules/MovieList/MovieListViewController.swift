@@ -11,11 +11,7 @@ import Kingfisher
 class MovieListViewController: UIViewController,IMovieListView {
     
     var presenter: IMovieListPresenter!
-    var movies: [Movie] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    var movies: [Movie] = []
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -46,6 +42,7 @@ class MovieListViewController: UIViewController,IMovieListView {
 
     func showMoviesData(movies: [Movie]) {
         self.movies = movies
+        collectionView.reloadData()
     }
     
     func didClickSortButton(sender: Any) {
@@ -76,7 +73,7 @@ extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = self.movies[indexPath.row]
-        self.performSegue(withIdentifier: "detailSegue", sender: movie)
+        self.presenter.didSelectMovie(movie: movie)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

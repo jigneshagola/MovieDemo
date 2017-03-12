@@ -66,7 +66,8 @@ class MovieListRouter: IMovieListRouter {
     }
     
     func presentDetails(for movie: Movie) {
-        
+        let movieDetailViewController = MovieDetailRouter.assembleModule(movie: movie)
+        self.viewController?.navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
     
 }

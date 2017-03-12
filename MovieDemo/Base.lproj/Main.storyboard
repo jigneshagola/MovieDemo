@@ -52,5 +52,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Movie Detail View Controller-->
+        <scene sceneID="BPe-ON-fKh">
+            <objects>
+                <viewController storyboardIdentifier="MovieDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="3Xe-aN-rwo" customClass="MovieDetailViewController" customModule="MovieDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gvd-Ge-f1z"/>
+                        <viewControllerLayoutGuide type="bottom" id="qna-hb-MGw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pS2-lD-NfM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="H4v-fH-EOL">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="H4v-fH-EOL" firstAttribute="leading" secondItem="pS2-lD-NfM" secondAttribute="leading" id="GCO-aw-hfm"/>
+                            <constraint firstAttribute="trailing" secondItem="H4v-fH-EOL" secondAttribute="trailing" id="Lv7-Ts-RAg"/>
+                            <constraint firstItem="H4v-fH-EOL" firstAttribute="top" secondItem="gvd-Ge-f1z" secondAttribute="bottom" id="l9a-Ta-5jk"/>
+                            <constraint firstItem="qna-hb-MGw" firstAttribute="top" secondItem="H4v-fH-EOL" secondAttribute="bottom" id="mjd-NY-m14"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="H4v-fH-EOL" id="AM4-f0-DnD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MRB-OU-4WK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1028" y="126"/>
+        </scene>
     </scenes>
 </document>
