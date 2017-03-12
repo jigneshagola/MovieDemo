@@ -12,11 +12,16 @@ import ObjectMapper
 class MovieListPresenterTests: XCTestCase {
     
     var movieListPresenter:MovieListPresenter!
-
+    
     override func setUp() {
         super.setUp()
-       
+        
         self.movieListPresenter = MovieListPresenter()
+        let interactor = MovieListInteractor()
+        let router = MovieListRouter()
+        
+        movieListPresenter.interactor = interactor
+        movieListPresenter.router = router
         
     }
     
@@ -51,29 +56,21 @@ class MovieListPresenterTests: XCTestCase {
     func testMoviesFetched() {
         
         let movie1 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 1,"title":"X Man"]))
-        let movie2 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 1,"title":"X Man"]))
+        let movie2 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 2,"title":"Logan"]))
         
         self.movieListPresenter?.movies.append(movie1!)
         self.movieListPresenter?.movies.append(movie2!)
         
         class DummyVC:MovieListViewController {
             var isShowMoviesCalled = false
-            var isShowErrorCalled = false
-            
+    
             override func showMoviesData(movies: [Movie]) {
                 self.isShowMoviesCalled = true
-            }
-            
-            override func showError(with title: String, messege: String) {
-                self.isShowErrorCalled = true
             }
         }
         
         let view = DummyVC()
         self.movieListPresenter?.view = view
-        
-        self.movieListPresenter.moviesFethingFailed(error: NSError(domain:"", code: 0, userInfo:nil))
-        XCTAssertTrue(view.isShowErrorCalled)
         
         self.movieListPresenter?.moviesFetched(movies: [movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!])
         
@@ -88,7 +85,19 @@ class MovieListPresenterTests: XCTestCase {
         
     }
     
+    func testMovieFetchingFailed() {
+        self.movieListPresenter.isMoreDataAvailable = true
+        self.movieListPresenter.fetchMoreMovies()
+        self.movieListPresenter.moviesFethingFailed(error: NSError(domain:"", code: 0, userInfo:[NSLocalizedDescriptionKey:""]))
+        
+        
+        //On api fail current page should be decremented by 1 coz we increse current page count while fetching
+        XCTAssertEqual(self.movieListPresenter.currentPage,0)
+    }
+    
     func testSearch() {
+        self.movieListPresenter.movies.removeAll()
+        
         let movie1 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 1,"title":"X Man"]))
         let movie2 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 2,"title":"Logan"]))
         
@@ -117,7 +126,6 @@ class MovieListPresenterTests: XCTestCase {
         XCTAssertEqual(view.searchResult?[0].title,"Logan")
         
         self.movieListPresenter.searchMovie(for: "")
-        XCTAssertEqual(view.searchResult?.count,0)
         XCTAssertTrue(view.isDisplayNoSearchResultCalled)
     }
     

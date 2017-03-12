@@ -40,7 +40,10 @@ class MovieListPresenter: IMovieListPresenter {
     }
     
     func moviesFethingFailed(error: Error) {
-        self.view?.showError(with: "OOPS!", messege: error.localizedDescription)
+        currentPage = currentPage - 1
+        self.router.showError(with: "OOPS!", messege: error.localizedDescription, retryCallBack: {
+            self.fetchMoreMovies()
+        })
     }
     
     func fetchMoreMovies() {

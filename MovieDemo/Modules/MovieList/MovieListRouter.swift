@@ -65,6 +65,15 @@ class MovieListRouter: IMovieListRouter {
         self.viewController?.present(alert, animated: true, completion: nil)
     }
     
+    func showError(with title: String, messege: String, retryCallBack: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: messege, preferredStyle: UIAlertControllerStyle.alert)
+        let retryAction = UIAlertAction(title: "Retry", style: .default) { (aletAction) in
+            retryCallBack()
+        }
+        alert.addAction(retryAction)
+        self.viewController?.present(alert, animated: true, completion: nil)
+    }
+    
     func presentDetails(for movie: Movie) {
         let movieDetailViewController = MovieDetailRouter.assembleModule(movie: movie)
         self.viewController?.navigationController?.pushViewController(movieDetailViewController, animated: true)

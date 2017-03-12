@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 class MovieListViewController: UIViewController,IMovieListView,UISearchControllerDelegate, UISearchResultsUpdating {
-    
+
     var presenter: IMovieListPresenter!
     var movies: [Movie] = []
     
@@ -58,9 +58,6 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
     }
     
 //MARK: Interface mathods
-    func showError(with title: String, messege: String) {
-            
-    }
     
     func showMoviesData(movies: [Movie]) {
         self.movies = movies

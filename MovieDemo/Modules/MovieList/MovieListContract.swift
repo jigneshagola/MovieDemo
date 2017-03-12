@@ -14,6 +14,8 @@ protocol IMovieListRouter {
     
     func presentSortOptions(sortCompletion: ((SortType) -> ())?)
     func presentDetails(for movie: Movie)
+    
+    func showError(with title: String, messege: String,retryCallBack:@escaping () -> Void)
 }
 
 protocol IMovieListPresenter {
@@ -46,7 +48,6 @@ protocol IMovieListInteractor {
 protocol IMovieListView: class {
     var presenter: IMovieListPresenter! { get set }
     
-    func showError(with title:String,messege:String)
     func showMoviesData(movies: [Movie])
     
     func displaySearchResult(for movies:[Movie])
