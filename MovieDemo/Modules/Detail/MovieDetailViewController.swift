@@ -44,17 +44,23 @@ extension MovieDetailViewController:UITableViewDataSource,UITableViewDelegate {
         switch indexPath.row {
         case Row.header.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: R.CellId.movieDetailHeader) as! MovieHeaderTableViewCell
+            
             cell.setHeaderView(movie: self.movie!)
+            
             return cell;
         case Row.overView.rawValue:
             let cell = UITableViewCell(style: .default, reuseIdentifier: "cell");
+            
             cell.textLabel?.text = self.movie?.overview
             cell.textLabel?.numberOfLines = 0;
             cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            
             return cell
         case Row.detail.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: R.CellId.movieDetail) as! MovieDetailTableViewCell
+            
             cell.setUpMovie(movie: self.movie!)
+            
             return cell;
             
         default:

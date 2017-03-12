@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="328" height="164"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="tm7-k0-MM2" userLabel="Image View Movie Poster">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="tm7-k0-MM2" userLabel="Image View Movie Poster">
                         <rect key="frame" x="15" y="15" width="92" height="135"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="92" id="BAT-nW-oGf"/>

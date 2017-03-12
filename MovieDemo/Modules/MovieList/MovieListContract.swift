@@ -27,6 +27,7 @@ protocol IMovieListPresenter {
     func moviesFetched(movies:[Movie]) 
     func didClickSortButton()
     func didSelectMovie(movie: Movie)
+    func searchMovie(for searchText:String)
 }
 
 protocol IMovieListInteractor {
@@ -42,4 +43,7 @@ protocol IMovieListView: class {
     
     func showNoContentScreen()
     func showMoviesData(movies: [Movie])
+    
+    func displaySearchResult(for movies:[Movie])
+    func displayNoSearchResult()
 }

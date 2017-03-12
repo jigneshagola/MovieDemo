@@ -49,8 +49,10 @@ class MovieListPresenterTests: XCTestCase {
     }
     
     func testMoviesFetched() {
-        let movie1 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 1]))
-        let movie2 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 2]))
+        
+        let movie1 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 1,"title":"X Man"]))
+        let movie2 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 1,"title":"X Man"]))
+        
         self.movieListPresenter?.movies.append(movie1!)
         self.movieListPresenter?.movies.append(movie2!)
         
@@ -61,18 +63,52 @@ class MovieListPresenterTests: XCTestCase {
             }
         }
         
-        self.movieListPresenter?.view = DummyVC()
+        let view = DummyVC()
+        self.movieListPresenter?.view = view
         self.movieListPresenter?.moviesFetched(movies: [movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!])
         
         XCTAssertTrue((self.movieListPresenter?.isMoreDataAvailable)!)
         XCTAssertEqual(self.movieListPresenter?.movies.count, 12)
-        XCTAssertTrue((self.movieListPresenter?.view as! DummyVC).isShowMoviesCalled)
+        XCTAssertTrue(view.isShowMoviesCalled)
         
         self.movieListPresenter?.moviesFetched(movies: [movie1!,movie2!])
         
         XCTAssertFalse((self.movieListPresenter?.isMoreDataAvailable)!)
         XCTAssertEqual(self.movieListPresenter?.movies.count, 14)
         
+    }
+    
+    func testSearch() {
+        let movie1 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 1,"title":"X Man"]))
+        let movie2 = Movie(map: Map(mappingType: .fromJSON, JSON: ["id" : 2,"title":"Logan"]))
+        
+        self.movieListPresenter?.movies.append(movie1!)
+        self.movieListPresenter?.movies.append(movie2!)
+        
+        class DummyVC:MovieListViewController {
+            var isDisplayResultcalled = false
+            var searchResult:[Movie]?
+            var isDisplayNoSearchResultCalled = false
+            
+            override func displaySearchResult(for movies: [Movie]) {
+                self.isDisplayResultcalled = true;
+                self.searchResult = movies
+            }
+            
+            override func displayNoSearchResult() {
+                self.isDisplayNoSearchResultCalled = true
+            }
+        }
+        let view = DummyVC()
+        self.movieListPresenter.view = view
+        self.movieListPresenter.searchMovie(for: "Log")
+        
+        XCTAssertTrue(view.isDisplayResultcalled)
+        XCTAssertEqual(view.searchResult?[0].title,"Logan")
+        
+        self.movieListPresenter.searchMovie(for: "")
+        XCTAssertEqual(view.searchResult?.count,0)
+        XCTAssertTrue(view.isDisplayNoSearchResultCalled)
     }
     
 }

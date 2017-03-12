@@ -8,10 +8,16 @@
 
 import UIKit
 import Kingfisher
-class MovieListViewController: UIViewController,IMovieListView {
+class MovieListViewController: UIViewController,IMovieListView,UISearchControllerDelegate, UISearchResultsUpdating {
     
     var presenter: IMovieListPresenter!
     var movies: [Movie] = []
+    
+    var searchController:UISearchController!
+    var searchResultViewController: MovieSearchResultViewController?
+    
+    var noSearchResultLabel:UILabel?
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -19,12 +25,9 @@ class MovieListViewController: UIViewController,IMovieListView {
         presenter?.viewDidLoad()
         self.setupView()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
-    func setupView() {
+    
+    fileprivate func setupView() {
+        
         self.collectionView.register(UINib(nibName: R.CellId.movieList, bundle: nil), forCellWithReuseIdentifier: R.CellId.movieList)
         
         let sortButton = UIBarButtonItem(
@@ -34,12 +37,30 @@ class MovieListViewController: UIViewController,IMovieListView {
             action: #selector(MovieListViewController.didClickSortButton(sender:))
         )
         navigationItem.rightBarButtonItem = sortButton
+        
+        let flowLayout:UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        
+        self.searchResultViewController = MovieSearchResultViewController(collectionViewLayout: flowLayout)
+        self.searchResultViewController?.presenter = presenter
+        
+        self.searchController = UISearchController(searchResultsController:  self.searchResultViewController)
+        
+        
+        self.searchController.searchResultsUpdater = self
+        self.searchController.delegate = self
+        
+        self.searchController.hidesNavigationBarDuringPresentation = false
+        self.searchController.dimsBackgroundDuringPresentation = false
+        
+        self.navigationItem.titleView = searchController.searchBar
+        
+        self.definesPresentationContext = true
     }
-    
+//MARK: Interface mathods
     func showNoContentScreen() {
         
     }
-
+    
     func showMoviesData(movies: [Movie]) {
         self.movies = movies
         collectionView.reloadData()
@@ -48,15 +69,47 @@ class MovieListViewController: UIViewController,IMovieListView {
     func didClickSortButton(sender: Any) {
         self.presenter.didClickSortButton()
     }
+    
+    func displaySearchResult(for movies:[Movie]) {
+        if let label = self.noSearchResultLabel {
+            label.removeFromSuperview()
+        }
+        self.searchResultViewController?.movies = movies
+        self.searchResultViewController?.collectionView?.reloadData()
+    }
+    
+    func displayNoSearchResult() {
+        
+        self.searchResultViewController?.movies.removeAll()
+        self.searchResultViewController?.collectionView?.reloadData()
+        
+        guard let  _ = self.noSearchResultLabel  else {
+            self.noSearchResultLabel = UILabel()
+            
+            self.noSearchResultLabel!.text = "\"Sorry, No Results Found\""
+            self.noSearchResultLabel!.sizeToFit()
+            self.noSearchResultLabel!.center = CGPoint(x: (self.searchResultViewController?.collectionView?.center.x)!, y: 15)
+            
+            self.searchResultViewController?.collectionView?.addSubview(self.noSearchResultLabel!)
+            
+            return
+        }
+    }
+    
+//MARK: Search Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        self.presenter.searchMovie(for: searchController.searchBar.text!)
+    }
 }
 
-extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+extension MovieListViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.CellId.movieList, for: indexPath) as! MovieCollectionViewCell
         
@@ -67,8 +120,7 @@ extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDel
             self.presenter.fetchMoreMovies()
         }
         
-        return cell;
-        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -92,3 +144,5 @@ extension MovieListViewController:UICollectionViewDataSource,UICollectionViewDel
         return CGSize(width: collectionView.frame.size.width/2 - 12, height: 270)
     }
 }
+
+

@@ -33,6 +33,7 @@ class Movie: Mappable {
     }
     
     required init?(map: Map) {
-        
+        self.id = map.JSON["id"] as! Int!
+        self.title = map.JSON["title"] as! String!
     }
 }

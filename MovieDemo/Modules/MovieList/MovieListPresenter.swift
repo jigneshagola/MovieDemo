@@ -65,4 +65,18 @@ class MovieListPresenter: IMovieListPresenter {
     func didSelectMovie(movie: Movie) {
         self.router.presentDetails(for: movie)
     }
+    
+    func searchMovie(for searchText:String) {
+        
+        let whitespaceCharacterSet = CharacterSet.whitespaces
+        let strippedString = searchText.trimmingCharacters(in: whitespaceCharacterSet)
+        
+        let searchedMovies = self.movies.filter {
+            return $0.title.range(of: strippedString, options: .caseInsensitive) != nil
+        }
+        
+        if searchedMovies.count == 0 { self.view?.displayNoSearchResult() }
+        else { self.view?.displaySearchResult(for: searchedMovies) }
+        
+    }
 }
