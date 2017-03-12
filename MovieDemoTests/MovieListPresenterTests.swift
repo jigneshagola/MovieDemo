@@ -58,13 +58,23 @@ class MovieListPresenterTests: XCTestCase {
         
         class DummyVC:MovieListViewController {
             var isShowMoviesCalled = false
+            var isShowErrorCalled = false
+            
             override func showMoviesData(movies: [Movie]) {
                 self.isShowMoviesCalled = true
+            }
+            
+            override func showError(with title: String, messege: String) {
+                self.isShowErrorCalled = true
             }
         }
         
         let view = DummyVC()
         self.movieListPresenter?.view = view
+        
+        self.movieListPresenter.moviesFethingFailed(error: NSError(domain:"", code: 0, userInfo:nil))
+        XCTAssertTrue(view.isShowErrorCalled)
+        
         self.movieListPresenter?.moviesFetched(movies: [movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!,movie1!,movie2!])
         
         XCTAssertTrue((self.movieListPresenter?.isMoreDataAvailable)!)

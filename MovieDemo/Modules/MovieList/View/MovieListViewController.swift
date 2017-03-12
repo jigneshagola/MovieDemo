@@ -56,9 +56,10 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
         
         self.definesPresentationContext = true
     }
+    
 //MARK: Interface mathods
-    func showNoContentScreen() {
-        
+    func showError(with title: String, messege: String) {
+            
     }
     
     func showMoviesData(movies: [Movie]) {

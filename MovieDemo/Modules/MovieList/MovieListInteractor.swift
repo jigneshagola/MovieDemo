@@ -12,16 +12,20 @@ class MovieListInteractor: IMovieListInteractor {
     var presenter: IMovieListPresenter!
     
     func fetchMovie(for page: Int, sortType: SortType) {
-        MovieListService.fetchMovie(for: page, sortBy: sortType.rawValue) { (movies) in
-            self.movieFetched(movie: movies)
+        MovieListService.fetchMovie(for: page, sortBy: sortType.rawValue) { (movies, error) in
+            if let err = error {
+                self.movieFetchFailed(with: err)
+            } else {
+                self.movieFetched(movies: movies!)
+            }
         }
     }
     
-    func movieFetched(movie: [Movie]) {
-        self.presenter.moviesFetched(movies: movie)
+    func movieFetched(movies: [Movie]) {
+        self.presenter.moviesFetched(movies: movies)
     }
     
-    func movieFetchFailed() {
-        
+    func movieFetchFailed(with error: Error) {
+        self.presenter.moviesFethingFailed(error: error)
     }
 }

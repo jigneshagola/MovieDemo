@@ -21,12 +21,8 @@ class MovieSearchResultViewController: UICollectionViewController {
         self.collectionView?.dataSource = self
         self.collectionView?.delegate = self
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
+
 extension MovieSearchResultViewController:UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

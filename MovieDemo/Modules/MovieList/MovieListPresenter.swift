@@ -39,6 +39,10 @@ class MovieListPresenter: IMovieListPresenter {
         self.view?.showMoviesData(movies: self.movies)
     }
     
+    func moviesFethingFailed(error: Error) {
+        self.view?.showError(with: "OOPS!", messege: error.localizedDescription)
+    }
+    
     func fetchMoreMovies() {
         if isMoreDataAvailable == true {
             currentPage = currentPage + 1
