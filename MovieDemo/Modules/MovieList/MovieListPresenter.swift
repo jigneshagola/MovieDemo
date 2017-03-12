@@ -35,10 +35,7 @@ class MovieListPresenter: IMovieListPresenter {
         if movies.count < R.perPage {
             self.isMoreDataAvailable = false
         }
-        
-        if currentPage == 1 {
-            self.view?.hideActivityIndicator()
-        }
+        self.view?.hideActivityIndicator()
         self.movies = self.movies + movies
         self.view?.showMoviesData(movies: self.movies)
     }
@@ -47,6 +44,7 @@ class MovieListPresenter: IMovieListPresenter {
         currentPage = currentPage - 1
         self.view?.hideActivityIndicator()
         self.router.showError(with: "OOPS!", messege: error.localizedDescription, retryCallBack: {
+            self.view?.showActivityIndicator()
             self.fetchMoreMovies()
         })
     }
@@ -69,6 +67,7 @@ class MovieListPresenter: IMovieListPresenter {
             self.sortType = sortType
             self.currentPage = 0
             self.isMoreDataAvailable = true
+            self.view?.showActivityIndicator()
             self.movies.removeAll()
             self.fetchMoreMovies()
         }
@@ -87,8 +86,11 @@ class MovieListPresenter: IMovieListPresenter {
             return $0.title.range(of: strippedString, options: .caseInsensitive) != nil
         }
         
-        if searchedMovies.count == 0 { self.view?.displayNoSearchResult() }
-        else { self.view?.displaySearchResult(for: searchedMovies) }
+        if searchedMovies.count == 0 {
+            self.view?.displayNoSearchResult()
+        } else {
+            self.view?.displaySearchResult(for: searchedMovies)
+         }
         
     }
 }

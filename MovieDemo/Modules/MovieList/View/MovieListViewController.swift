@@ -50,7 +50,7 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
         self.searchController.searchResultsUpdater = self
         self.searchController.delegate = self
         self.searchController.hidesNavigationBarDuringPresentation = false
-        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.dimsBackgroundDuringPresentation = true
         
         self.navigationItem.titleView = searchController.searchBar
         
@@ -82,6 +82,7 @@ class MovieListViewController: UIViewController,IMovieListView,UISearchControlle
     func displaySearchResult(for movies:[Movie]) {
         if let label = self.noSearchResultLabel {
             label.removeFromSuperview()
+            self.noSearchResultLabel = nil
         }
         self.searchResultViewController?.movies = movies
         self.searchResultViewController?.collectionView?.reloadData()
